@@ -127,6 +127,10 @@ main {
   column-gap: 3rem;
   font-size: 1.2em;
 
+  div {
+    min-width: 3.6em;
+  }
+
   .icons {
     padding-top: 1em;
   }
@@ -138,6 +142,10 @@ main {
     font-size: 3.5em;
     column-gap: 1.5rem;
     font-weight: 700;
+
+    .temp {
+      min-width: 1.7em;
+    }
 
     span {
       color: $clr-bg-dk;

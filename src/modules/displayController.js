@@ -1,58 +1,56 @@
+import PubSub from "pubsub-js";
+import { convertTemperature, convertWindSpeed } from "./utils";
+import weatherModule from "./weatherData";
+
 const displayController = (() => {
-  let displayUnit = "metric";
   const changeUnitBtn = document.querySelector("#change-display-unit");
 
-  function changeDisplayUnit() {
-    changeCurrentWeatherUnit();
-    displayUnit = displayUnit === "metric" ? "imperial" : "metric";
-    changeUnitBtn.textContent = displayUnit === "metric" ? "Celsius" : "Fahrenheit";
-  }
-
-  function getDisplayUnit() {
-    return displayUnit;
-  }
-
-  function convertTemperature(value) {
-    if (displayUnit === "metric") {
-      return Math.round(value * 1.8 + 32);
-    }
-    if (displayUnit === "imperial") {
-      return Math.round((value - 32) / 1.8);
-    }
-    return NaN;
-  }
-
-  function convertWindSpeed(string) {
-    if (displayUnit === "metric") {
-      const speed = parseInt(string.slice(0, -5), 10);
-      const speedConvert = Math.round((speed / 1.609344) * 10) / 10;
-      return `${speedConvert} mph`;
-    }
-    if (displayUnit === "imperial") {
-      const speed = parseInt(string.slice(0, -4), 10);
-      const speedConvert = Math.round((speed * 1.609344) * 10) / 10;
-      return `${speedConvert} km/h`;
-    }
-    return NaN;
-  }
-
   function changeCurrentWeatherUnit() {
+    const displayUnit = weatherModule.getDisplayUnit();
     const container = document.querySelector(".current-weather-container");
     const temp = container.querySelector(".temp");
     const feels = container.querySelector(".feels");
     const windSpeed = container.querySelector(".wind-speed");
-    temp.textContent = `${convertTemperature(parseInt(temp.textContent.slice(0, -1), 10))}°`;
-    feels.textContent = `Feels like ${convertTemperature(parseInt(feels.textContent.split(" ")[2].slice(0, -1), 10))}°`;
-    windSpeed.textContent = convertWindSpeed(windSpeed.textContent);
+    temp.textContent = `${convertTemperature(
+      displayUnit,
+      parseInt(temp.textContent.slice(0, -1), 10),
+    )}°`;
+    feels.textContent = `Feels like ${convertTemperature(
+      displayUnit,
+      parseInt(feels.textContent.split(" ")[2].slice(0, -1), 10),
+    )}°`;
+    windSpeed.textContent = convertWindSpeed(displayUnit, windSpeed.textContent);
+  }
+
+  async function renderWeather() {
+    const data = weatherModule.getCurrentWeather(await weatherModule.fetchWeather());
+    const container = document.querySelector(".current-weather-container");
+    container.querySelector(".temp").textContent = `${data.temp}°`;
+    container.querySelector(".wi").setAttribute("class", `wi wi-owm-${data.id}`);
+    container.querySelector(".city").textContent = `${data.name}`;
+    container.querySelector(".date").textContent = `${data.weekdayShort}, ${data.time}`;
+    container.querySelector(".feels").textContent = `Feels like ${data.feels_like}°`;
+    container.querySelector(".wind-speed").textContent = weatherModule.getDisplayUnit() === "metric"
+      ? `${data.wind_speed} km/h`
+      : `${data.wind_speed} mph`;
+    container.querySelector(".humidity").textContent = `${data.humidity}%`;
+    container.querySelector(".pop").textContent = `${data.pop}%`;
+  }
+
+  function changeDisplayUnit() {
+    changeCurrentWeatherUnit();
+    weatherModule.changeDisplayUnit();
+    const displayUnit = weatherModule.getDisplayUnit();
+    changeUnitBtn.textContent = displayUnit === "metric" ? "Celsius" : "Fahrenheit";
   }
 
   function init() {
     changeUnitBtn.addEventListener("click", changeDisplayUnit);
+    PubSub.subscribe("new-city", renderWeather);
   }
 
   return {
     init,
-    getDisplayUnit,
   };
 })();
 

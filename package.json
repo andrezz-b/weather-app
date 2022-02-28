@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/andrezz-b/weather-app#readme",
   "devDependencies": {
+    "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.3.1",
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
-    "css-loader": "^6.5.1",
-    "css-minimizer-webpack-plugin": "^3.3.1",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.6",
@@ -36,6 +36,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4"
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "pubsub-js": "^1.9.4"
   }
 }
