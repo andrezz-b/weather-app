@@ -1,21 +1,162 @@
-@import "reset.css", "weather-icons.min.css";
+@import "reset.css", "weather-icons.min.css", "variables";
 
-body {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-}
-
-form {
+@mixin flexCenter($direction: row) {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: $direction;
+}
+
+@mixin wheaterInfo {
+  display: grid;
+  grid-template-areas:
+    "icon title"
+    "icon data";
+  column-gap: 0.7rem;
+  font-family: $ff-title;
+  justify-content: start;
+  padding: .25em 0;
+
+  span {
+    min-width: 1em;
+    grid-area: icon;
+    align-self: center;
+    padding-bottom: 0.5rem;
+    font-size: 1.4em;
+  }
+
+  h1 {
+    font-size: 0.75em;
+    font-weight: 400;
+    grid-area: title;
+  }
+
+  div {
+    font-size: 1.5em;
+    grid-area: data;
+    font-weight: 700;
+  }
+}
+
+body {
+  @include flexCenter(column);
+  justify-content: flex-start;
+  font-family: $ff-text;
+}
+
+header {
+  @include flexCenter();
+  justify-content: space-around;
+  width: 100%;
+  padding: 1.5em 1em;
+  background-color: $clr-bg-dk;
+
+  .title {
+    font-family: $ff-title;
+    color: $clr-base;
+    font-size: 2.5em;
+  }
+
+  button {
+    font-family: $ff-title;
+    font-size: 1.3em;
+    padding: 0.35em 1em;
+    border-radius: 20px;
+    color: $clr-bg-dk;
+    cursor: pointer;
+    border: none;
+    transition: 200ms;
+
+    &:hover {
+      color: $clr-ntrl-w;
+      background-color: $clr-base;
+    }
+  }
+}
+
+#search-city {
+  font-size: 1.4em;
+  @include flexCenter();
   row-gap: 1rem;
+  position: relative;
 
+  span {
+    @include flexCenter();
+    height: 1.75em;
+    width: 1.75em;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    color: $clr-ntrl-g;
+  }
 
-  input[type="submit"] {
-    width: 100%;
+  input[type="text"] {
+    padding: 0.2em 1.95em 0.2em 0.25em;
+    border: none;
+    border-bottom: 2px solid $clr-ntrl-g;
+    background-color: $clr-bg-dk;
+    color: $clr-ntrl-w;
+    transition: 200ms;
+
+    &:focus + span {
+      color: $clr-base;
+    }
+
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid $clr-base;
+    }
+
+    &:not(:focus)::placeholder,
+    &:not(:focus) {
+      color: $clr-ntrl-g;
+    }
+  }
+}
+
+main {
+  @include flexCenter();
+  padding: 1em;
+}
+
+.current-weather {
+  @include flexCenter();
+  font-family: $ff-text;
+  color: $clr-bg-dk;
+  column-gap: 3rem;
+  font-size: 1.2em;
+
+  .icons {
+    padding-top: 1em;
+  }
+
+  .temp {
+    font-size: 3.5em;
+    font-weight: 700;
+
+    span {
+      color: $clr-bg-dk;
+      padding-left: 0.5em;
+    }
+  }
+
+  .city {
+    font-size: 2.25em;
+    font-family: $ff-title;
+    color: $clr-base;
+    font-weight: 500;
+  }
+
+  .date,
+  .min-max {
+    font-size: 0.9em;
+  }
+
+  .icon-container {
+    @include wheaterInfo();
+  }
+
+  .wi-raindrops {
+    font-size: 1.8em;
   }
 }

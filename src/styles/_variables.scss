@@ -1,0 +1,20 @@
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss",
+  "~@fortawesome/fontawesome-free/scss/regular.scss",
+  "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo&family=Open+Sans:wght@400&display=swap");
+
+$ff-title: 'Archivo', sans-serif;
+$ff-text: 'Open Sans', sans-serif;
+
+$clr-bg-dk: #233142;
+
+$clr-ntrl-w: #fff;
+
+$clr-ntrl-g: #e3e3e3;
+$clr-base: #f95959;
+$clr-base-lt: lighten(#f95959, 10%);
+
