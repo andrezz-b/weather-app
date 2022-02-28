@@ -60,6 +60,7 @@ header {
   button {
     font-family: $ff-title;
     font-size: 1.3em;
+    min-width: 7em;
     padding: 0.35em 1em;
     border-radius: 20px;
     color: $clr-bg-dk;

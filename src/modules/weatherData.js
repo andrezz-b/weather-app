@@ -82,7 +82,7 @@ const weatherModule = (() => {
     container.querySelector(".wi.wi-night-cloudy-high").class = `wi wi-owm-${data.id}`;
     container.querySelector(".city").textContent = `${data.name}`;
     container.querySelector(".date").textContent = `${data.weekdayShort}, ${data.time}`;
-    container.querySelector(".feels").textContent = `Feels like   ${data.feels_like}°`;
+    container.querySelector(".feels").textContent = `Feels like ${data.feels_like}°`;
     container.querySelector(".wind-speed").textContent = `${data.wind_speed} km/h`;
     container.querySelector(".humidity").textContent = `${data.humidity}%`;
     container.querySelector(".pop").textContent = `${data.pop}%`;
