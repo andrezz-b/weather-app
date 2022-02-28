@@ -1,6 +1,7 @@
 const londonData = {
   lat: 51.5073,
   lon: -0.1276,
+  name: "London",
   timezone: "Europe/London",
   timezone_offset: 0,
   current: {

@@ -130,13 +130,17 @@ main {
     padding-top: 1em;
   }
 
-  .temp {
+  .temp-container{
+    @include flexCenter();
+    align-items: flex-end;
+    justify-content: flex-start;
     font-size: 3.5em;
+    column-gap: 1.5rem;
     font-weight: 700;
 
     span {
       color: $clr-bg-dk;
-      padding-left: 0.5em;
+      font-size: 1em;
     }
   }
 
