@@ -40,6 +40,7 @@ const weatherModule = (() => {
     const { dt, humidity } = data.current;
     const { weekdayShort, time } = convertTime(dt);
     const { id } = data.current.weather[0];
+    const night = data.current.weather[0].icon.charAt(2) === "n";
     const pop = data.hourly[0].pop * 100;
     const { name } = data;
     const temp = Math.round(data.current.temp);
@@ -48,6 +49,7 @@ const weatherModule = (() => {
       ? Math.round(data.current.wind_speed * (18 / 5))
       : Math.round(data.current.wind_speed);
     const currentWeather = {
+      night,
       name,
       pop,
       weekdayShort,

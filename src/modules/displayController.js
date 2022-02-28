@@ -26,7 +26,8 @@ const displayController = (() => {
     const data = weatherModule.getCurrentWeather(await weatherModule.fetchWeather());
     const container = document.querySelector(".current-weather-container");
     container.querySelector(".temp").textContent = `${data.temp}°`;
-    container.querySelector(".wi").setAttribute("class", `wi wi-owm-${data.id}`);
+    const className = data.night ? `wi wi-owm-night-${data.id}` : `wi wi-owm-day-${data.id}`;
+    container.querySelector(".wi").setAttribute("class", className);
     container.querySelector(".city").textContent = `${data.name}`;
     container.querySelector(".date").textContent = `${data.weekdayShort}, ${data.time}`;
     container.querySelector(".feels").textContent = `Feels like ${data.feels_like}°`;
