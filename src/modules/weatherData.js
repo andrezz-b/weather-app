@@ -31,6 +31,19 @@ const weatherModule = (() => {
   };
 })();
 
+function convertTime(unixTime) {
+  const inputDate = new Date(unixTime * 1000);
+  const date = {
+    weekdayLong: Intl.DateTimeFormat("en", {
+      weekday: "long",
+    }).format(inputDate),
+    time: Intl.DateTimeFormat("en", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: false,
+    }).format(inputDate),
+  };
+  return date;
+}
 console.log(londonData);
-
 export default weatherModule;
