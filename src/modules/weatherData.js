@@ -13,7 +13,7 @@ const weatherModule = (() => {
         { mode: "cors" },
       ).then((response) => response.json());
       const data = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=a2b73bbf19c4525e272278eaecbef43d`,
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&units=metric&appid=a2b73bbf19c4525e272278eaecbef43d`,
         { mode: "cors" },
       ).then((response) => response.json());
       console.log(data);
