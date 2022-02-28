@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-import londonData from "./londonDataTemp";
-import createCurrentWeatherElement from "./elements";
 
 const weatherModule = (() => {
   const form = document.querySelector("#search-city");
@@ -68,17 +66,30 @@ const weatherModule = (() => {
     return currentWeather;
   }
 
-  async function render() {
-    const container = document.querySelector("#current-weather");
-    const child = container.firstElementChild;
-    child.remove();
-    const data = await fetchWeather();
-    const currentWeatherEl = createCurrentWeatherElement(getCurrentWeather(data));
-    container.append(currentWeatherEl);
+  // async function render() {
+  //   const container = document.querySelector("#current-weather");
+  //   const child = container.firstElementChild;
+  //   child.remove();
+  //   const data = await fetchWeather();
+  //   const currentWeatherEl = createCurrentWeatherElement(getCurrentWeather(data));
+  //   container.append(currentWeatherEl);
+  // }
+
+  async function renderWithoutRemove() {
+    const data = getCurrentWeather(await fetchWeather());
+    const container = document.querySelector(".current-weather-container");
+    container.querySelector(".temp").textContent = `${data.temp}°`;
+    container.querySelector(".wi.wi-night-cloudy-high").class = `wi wi-owm-${data.id}`;
+    container.querySelector(".city").textContent = `${data.name}`;
+    container.querySelector(".date").textContent = `${data.weekdayShort}, ${data.time}`;
+    container.querySelector(".feels").textContent = `Feels like   ${data.feels_like}°`;
+    container.querySelector(".wind-speed").textContent = `${data.wind_speed} km/h`;
+    container.querySelector(".humidity").textContent = `${data.humidity}%`;
+    container.querySelector(".pop").textContent = `${data.pop}%`;
   }
 
   const init = () => {
-    form.addEventListener("submit", render);
+    form.addEventListener("submit", renderWithoutRemove);
   };
 
   return {
@@ -86,7 +97,5 @@ const weatherModule = (() => {
     getCurrentWeather,
   };
 })();
-
-weatherModule.getCurrentWeather(londonData);
 
 export default weatherModule;
