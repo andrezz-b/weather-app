@@ -1,8 +1,27 @@
+/* eslint-disable camelcase */
 import londonData from "./londonDataTemp";
 
 const weatherModule = (() => {
   const form = document.querySelector("#search-city");
   const input = form.querySelector("#city-name");
+
+  function convertTime(unixTime) {
+    const inputDate = new Date(unixTime * 1000);
+    const date = {
+      weekdayLong: Intl.DateTimeFormat("en", {
+        weekday: "long",
+      }).format(inputDate),
+      weekdayShort: Intl.DateTimeFormat("en", {
+        weekday: "short",
+      }).format(inputDate),
+      time: Intl.DateTimeFormat("en", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false,
+      }).format(inputDate),
+    };
+    return date;
+  }
 
   async function fetchWeather() {
     try {
@@ -22,28 +41,37 @@ const weatherModule = (() => {
     }
   }
 
+  function getCurrentWeather(data) {
+    const {
+      dt, temp, feels_like, humidity, wind_speed,
+    } = data.current;
+    const { weekdayShort, time } = convertTime(dt);
+    const { id } = data.current.weather[0];
+    const { pop } = data.hourly[0];
+    const currentWeather = {
+      pop,
+      weekdayShort,
+      time,
+      temp,
+      feels_like,
+      humidity,
+      wind_speed,
+      id,
+    };
+    console.log(currentWeather);
+    return currentWeather;
+  }
+
   const init = () => {
     form.addEventListener("submit", fetchWeather);
   };
 
   return {
     init,
+    getCurrentWeather,
   };
 })();
 
-function convertTime(unixTime) {
-  const inputDate = new Date(unixTime * 1000);
-  const date = {
-    weekdayLong: Intl.DateTimeFormat("en", {
-      weekday: "long",
-    }).format(inputDate),
-    time: Intl.DateTimeFormat("en", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: false,
-    }).format(inputDate),
-  };
-  return date;
-}
-console.log(londonData);
+weatherModule.getCurrentWeather(londonData);
+
 export default weatherModule;
