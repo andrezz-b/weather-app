@@ -69,6 +69,8 @@ const displayController = (() => {
       : `${currentWeather.wind_speed} mph`;
     container.querySelector(".humidity").textContent = `${currentWeather.humidity}%`;
     container.querySelector(".pop").textContent = `${currentWeather.pop}%`;
+    document.querySelector(".sunrise").textContent = currentWeather.sunrise;
+    document.querySelector(".sunset").textContent = currentWeather.sunset;
   }
 
   function renderHourlyWeather(hourlyWeather) {

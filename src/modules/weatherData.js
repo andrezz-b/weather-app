@@ -28,7 +28,6 @@ const weatherModule = (() => {
         { mode: "cors" },
       ).then((response) => response.json());
       data.name = name;
-      console.log(data);
       return data;
     } catch (err) {
       console.log(err);
@@ -43,12 +42,16 @@ const weatherModule = (() => {
     const night = data.current.weather[0].icon.charAt(2) === "n";
     const pop = data.hourly[0].pop * 100;
     const { name } = data;
+    const { time: sunrise } = convertTime(data.daily[0].sunrise);
+    const { time: sunset } = convertTime(data.daily[0].sunset);
     const temp = Math.round(data.current.temp);
     const feels_like = Math.round(data.current.feels_like);
     const wind_speed = getDisplayUnit() === "metric"
       ? Math.round(data.current.wind_speed * (18 / 5))
       : Math.round(data.current.wind_speed);
     const currentWeather = {
+      sunrise,
+      sunset,
       night,
       name,
       pop,
@@ -60,6 +63,7 @@ const weatherModule = (() => {
       wind_speed,
       id,
     };
+    console.log(currentWeather);
     return currentWeather;
   }
 
