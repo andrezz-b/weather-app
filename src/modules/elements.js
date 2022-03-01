@@ -48,7 +48,7 @@ function createIconContainer(test, data) {
   return container;
 }
 
-export default function createCurrentWeatherElement(currentWeather) {
+export function createCurrentWeatherElement(currentWeather) {
   const weatherElement = createDiv("", "current-weather-container");
 
   // Left column
@@ -75,4 +75,21 @@ export default function createCurrentWeatherElement(currentWeather) {
 
   weatherElement.append(columnLeft, columnRight);
   return weatherElement;
+}
+
+export function createHourlyElement(hourlyWeather) {
+  const hourylElement = createDiv("", "hourly-weather-item");
+  const time = createDiv(hourlyWeather.time, "time");
+  const className = hourlyWeather.night
+    ? `wi-owm-night-${hourlyWeather.id}`
+    : `wi-owm-day-${hourlyWeather.id}`;
+  const iconWeather = createIcon("wi", className);
+  const temp = createDiv(`${hourlyWeather.temp}°`, "temp");
+  // Chance of rain
+  const popContainer = createDiv("", "pop-container");
+  const iconRain = createIcon("wi", "wi-raindrops");
+  const pop = createDiv(`${hourlyWeather.pop}%`, "pop");
+  popContainer.append(iconRain, pop);
+  hourylElement.append(time, iconWeather, temp, popContainer);
+  return hourylElement;
 }

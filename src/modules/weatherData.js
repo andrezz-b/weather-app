@@ -63,6 +63,23 @@ const weatherModule = (() => {
     return currentWeather;
   }
 
+  function getHourlyWeather(data) {
+    const hourlyWeather = [];
+    for (let i = 0; i < 25; i += 1) {
+      const hour = data.hourly[i];
+      const { time } = convertTime(hour.dt);
+      const object = {
+        pop: Math.round(hour.pop * 100),
+        temp: Math.round(hour.temp),
+        night: hour.weather[0].icon.charAt(2) === "n",
+        id: hour.weather[0].id,
+        time,
+      };
+      hourlyWeather.push(object);
+    }
+    return hourlyWeather;
+  }
+
   function init() {
     form.addEventListener("submit", () => {
       PubSub.publish("new-city");
@@ -75,6 +92,7 @@ const weatherModule = (() => {
     fetchWeather,
     getDisplayUnit,
     changeDisplayUnit,
+    getHourlyWeather,
   };
 })();
 
