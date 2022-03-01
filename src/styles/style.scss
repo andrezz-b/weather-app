@@ -116,9 +116,11 @@ header {
 }
 
 main {
-  @include flexCenter();
+  @include flexCenter(column);
+  row-gap: 6rem;
   padding: 1em 7.5em;
   width: 100%;
+
   .container {
     @include flexCenter();
     width: 100%;
@@ -192,7 +194,7 @@ main {
   border-top: 2px solid $clr-bg-dk;
 
   &::-webkit-scrollbar {
-    height: .75rem;
+    height: 0.75rem;
   }
 
   &::-webkit-scrollbar-track {
@@ -203,7 +205,6 @@ main {
   }
 
   &::-webkit-scrollbar-thumb {
-
     border-radius: 30px;
     background-color: rgba($clr-bg-dk, 0.8);
     opacity: 0.8;
@@ -241,4 +242,84 @@ main {
       font-size: 1em;
     }
   }
+}
+
+#daily-container {
+  @include flexCenter(column);
+  width: 50%;
+  border-top: 2px solid $clr-ntrl-g;
+}
+
+.daily-weather-item {
+  display: grid;
+  padding: 0.5em 1em;
+  grid-template-columns: 4fr 1fr 3fr 1fr 1fr;
+  font-family: $ff-text;
+  color: $clr-bg-dk;
+  font-size: 1.25em;
+  align-items: center;
+  border-bottom: 2px solid $clr-ntrl-g;
+
+  width: 100%;
+
+  .weekday {
+    font-size: 1.1em;
+    color: $clr-base;
+  }
+
+  .pop-container {
+    @include flexCenter();
+    column-gap: 0.5rem;
+    font-weight: 700;
+    .wi {
+      font-size: 1.5em;
+    }
+    .pop {
+      font-size: 1em;
+    }
+  }
+
+  .weather-icon {
+    justify-self: center;
+    font-size: 1.4em;
+  }
+
+  .temp {
+    justify-self: end;
+    font-weight: 700;
+  }
+}
+
+.sunset-sunrise-container {
+  @include flexCenter();
+  justify-content: space-between;
+  align-self: flex-start;
+  width: 25%;
+
+  #sunrise,
+  #sunset {
+    @include flexCenter(column);
+    font-family: $ff-text;
+    color: $clr-bg-dk;
+    h1 {
+      font-weight: 400;
+      font-size: 2.5em;
+      color: $clr-base;
+    }
+    div {
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+    span {
+      font-size: 5.75em;
+    }
+  }
+}
+
+.wi-sunrise {
+  color: rgb(255, 188, 64);
+}
+
+.wi-sunset {
+  color: $clr-base-lt;
 }
