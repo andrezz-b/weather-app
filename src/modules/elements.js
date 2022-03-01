@@ -93,3 +93,22 @@ export function createHourlyElement(hourlyWeather) {
   hourylElement.append(time, iconWeather, temp, popContainer);
   return hourylElement;
 }
+
+export function createDailyElement(dailyWeather) {
+  const dailyElement = createDiv("", "daily-weather-item");
+  const weekday = createDiv(dailyWeather.weekdayLong, "weekday");
+  const className = dailyWeather.night
+    ? `wi-owm-night-${dailyWeather.id}`
+    : `wi-owm-day-${dailyWeather.id}`;
+  const iconWeather = createIcon("wi", className);
+  iconWeather.classList.add("weather-icon");
+  const tempMax = createDiv(`${dailyWeather.tempMax}°`, "temp", "max");
+  const tempMin = createDiv(`${dailyWeather.tempMin}°`, "temp", "min");
+  // Chance of rain
+  const popContainer = createDiv("", "pop-container");
+  const iconRain = createIcon("wi", "wi-raindrops");
+  const pop = createDiv(`${dailyWeather.pop}%`, "pop");
+  popContainer.append(iconRain, pop);
+  dailyElement.append(weekday, popContainer, iconWeather, tempMax, tempMin);
+  return dailyElement;
+}

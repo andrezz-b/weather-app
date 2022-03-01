@@ -80,6 +80,24 @@ const weatherModule = (() => {
     return hourlyWeather;
   }
 
+  function getDailyWeather(data) {
+    const dailyWeather = [];
+    data.daily.forEach((day) => {
+      const { weekdayLong } = convertTime(day.dt);
+      const { min, max } = day.temp;
+      const object = {
+        tempMax: Math.round(max),
+        tempMin: Math.round(min),
+        weekdayLong,
+        night: day.weather[0].icon.charAt(2) === "n",
+        id: day.weather[0].id,
+        pop: Math.round(day.pop * 100),
+      };
+      dailyWeather.push(object);
+    });
+    return dailyWeather;
+  }
+
   function init() {
     form.addEventListener("submit", () => {
       PubSub.publish("new-city");
@@ -93,7 +111,7 @@ const weatherModule = (() => {
     getDisplayUnit,
     changeDisplayUnit,
     getHourlyWeather,
+    getDailyWeather,
   };
 })();
-
 export default weatherModule;

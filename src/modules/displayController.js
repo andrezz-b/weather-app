@@ -1,5 +1,5 @@
 import PubSub from "pubsub-js";
-import { createHourlyElement } from "./elements";
+import { createHourlyElement, createDailyElement } from "./elements";
 import { convertTemperature, convertWindSpeed } from "./utils";
 import weatherModule from "./weatherData";
 
@@ -61,13 +61,26 @@ const displayController = (() => {
     });
   }
 
+  function renderDailyWeather(dailyWeather) {
+    const container = document.querySelector("#daily-container");
+    Array.from(container.children).forEach((child) => {
+      child.remove();
+    });
+    dailyWeather.forEach((day) => {
+      const dailyWeatherElement = createDailyElement(day);
+      container.append(dailyWeatherElement);
+    });
+  }
+
   async function renderWeather() {
     const data = await weatherModule.fetchWeather();
     const currentWeather = weatherModule.getCurrentWeather(data);
     const hourlyWeather = weatherModule.getHourlyWeather(data);
+    const dailyWeather = weatherModule.getDailyWeather(data);
 
     renderCurrentWeather(currentWeather);
     renderHourlyWeather(hourlyWeather);
+    renderDailyWeather(dailyWeather);
   }
 
   function changeDisplayUnit() {
