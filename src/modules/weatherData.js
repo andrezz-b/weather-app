@@ -17,7 +17,7 @@ const weatherModule = (() => {
 
   async function fetchWeather() {
     try {
-      const cityName = input.value;
+      const cityName = input.value === "" ? "London" : input.value;
       input.value = "";
       const [{ lat, lon, name }] = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=a2b73bbf19c4525e272278eaecbef43d`,
@@ -63,7 +63,6 @@ const weatherModule = (() => {
       wind_speed,
       id,
     };
-    console.log(currentWeather);
     return currentWeather;
   }
 
@@ -106,6 +105,7 @@ const weatherModule = (() => {
     form.addEventListener("submit", () => {
       PubSub.publish("new-city");
     });
+    PubSub.publish("new-city");
   }
 
   return {
