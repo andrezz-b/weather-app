@@ -23,6 +23,18 @@ const displayController = (() => {
     windSpeed.textContent = convertWindSpeed(displayUnit, windSpeed.textContent);
   }
 
+  function changeHourlyWeatherUnit() {
+    const hours = Array.from(document.querySelector("#hourly-container").children);
+    hours.forEach((hour) => {
+      const displayUnit = weatherModule.getDisplayUnit();
+      const temp = hour.querySelector(".temp");
+      temp.textContent = `${convertTemperature(
+        displayUnit,
+        parseInt(temp.textContent.slice(0, -1), 10),
+      )}°`;
+    });
+  }
+
   function renderCurrentWeather(currentWeather) {
     const container = document.querySelector(".current-weather-container");
     container.querySelector(".temp").textContent = `${currentWeather.temp}°`;
@@ -60,6 +72,7 @@ const displayController = (() => {
 
   function changeDisplayUnit() {
     changeCurrentWeatherUnit();
+    changeHourlyWeatherUnit();
     weatherModule.changeDisplayUnit();
     const displayUnit = weatherModule.getDisplayUnit();
     changeUnitBtn.textContent = displayUnit === "metric" ? "Celsius" : "Fahrenheit";
