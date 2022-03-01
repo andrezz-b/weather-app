@@ -15,7 +15,7 @@
   column-gap: 0.7rem;
   font-family: $ff-title;
   justify-content: start;
-  padding: .25em 0;
+  padding: 0.25em 0;
 
   span {
     min-width: 1em;
@@ -117,7 +117,13 @@ header {
 
 main {
   @include flexCenter();
-  padding: 1em;
+  padding: 1em 7.5em;
+  width: 100%;
+  .container {
+    @include flexCenter();
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 
 .current-weather-container {
@@ -135,7 +141,7 @@ main {
     padding-top: 1em;
   }
 
-  .temp-container{
+  .temp-container {
     @include flexCenter();
     align-items: flex-end;
     justify-content: flex-start;
@@ -171,5 +177,68 @@ main {
 
   .wi-raindrops {
     font-size: 1.8em;
+  }
+}
+
+#hourly-container {
+  @include flexCenter();
+  justify-content: flex-start;
+  width: 50%;
+  height: 100%;
+  padding: 0.25em 0.25em 0.5em 0.25em;
+  overflow-x: scroll;
+  column-gap: 1.5rem;
+  margin-top: 1.25rem;
+  border-top: 2px solid $clr-bg-dk;
+
+  &::-webkit-scrollbar {
+    height: .75rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-top: 1rem;
+
+    border-radius: 30px;
+    background-color: $clr-ntrl-g;
+  }
+
+  &::-webkit-scrollbar-thumb {
+
+    border-radius: 30px;
+    background-color: rgba($clr-bg-dk, 0.8);
+    opacity: 0.8;
+  }
+}
+
+.hourly-weather-item {
+  @include flexCenter(column);
+  font-family: $ff-text;
+  row-gap: 0.25rem;
+  font-size: 1.15em;
+  color: $clr-bg-dk;
+  padding: 0.5em;
+  border-radius: 20px;
+
+  .time {
+    font-size: 1.35em;
+    color: $clr-base;
+  }
+
+  span {
+    font-size: 1.75em;
+  }
+
+  .temp {
+    font-size: 1.4em;
+    font-weight: 700;
+  }
+
+  .pop-container {
+    @include flexCenter();
+    column-gap: 0.5rem;
+    font-weight: 700;
+    .pop {
+      font-size: 1em;
+    }
   }
 }
