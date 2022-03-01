@@ -35,13 +35,34 @@ const displayController = (() => {
     });
   }
 
+  function changeDailyWeatherUnit() {
+    const days = Array.from(document.querySelector("#daily-container").children);
+    days.forEach((day) => {
+      const displayUnit = weatherModule.getDisplayUnit();
+      const tempMax = day.querySelector(".temp.max");
+      const tempMin = day.querySelector(".temp.min");
+      tempMax.textContent = `${convertTemperature(
+        displayUnit,
+        parseInt(tempMax.textContent.slice(0, -1), 10),
+      )}°`;
+      tempMin.textContent = `${convertTemperature(
+        displayUnit,
+        parseInt(tempMin.textContent.slice(0, -1), 10),
+      )}°`;
+    });
+  }
+
   function renderCurrentWeather(currentWeather) {
     const container = document.querySelector(".current-weather-container");
     container.querySelector(".temp").textContent = `${currentWeather.temp}°`;
-    const className = currentWeather.night ? `wi wi-owm-night-${currentWeather.id}` : `wi wi-owm-day-${currentWeather.id}`;
+    const className = currentWeather.night
+      ? `wi wi-owm-night-${currentWeather.id}`
+      : `wi wi-owm-day-${currentWeather.id}`;
     container.querySelector(".wi").setAttribute("class", className);
     container.querySelector(".city").textContent = `${currentWeather.name}`;
-    container.querySelector(".date").textContent = `${currentWeather.weekdayShort}, ${currentWeather.time}`;
+    container.querySelector(
+      ".date",
+    ).textContent = `${currentWeather.weekdayShort}, ${currentWeather.time}`;
     container.querySelector(".feels").textContent = `Feels like ${currentWeather.feels_like}°`;
     container.querySelector(".wind-speed").textContent = weatherModule.getDisplayUnit() === "metric"
       ? `${currentWeather.wind_speed} km/h`
@@ -84,6 +105,7 @@ const displayController = (() => {
   }
 
   function changeDisplayUnit() {
+    changeDailyWeatherUnit();
     changeCurrentWeatherUnit();
     changeHourlyWeatherUnit();
     weatherModule.changeDisplayUnit();
