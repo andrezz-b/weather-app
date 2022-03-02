@@ -20,7 +20,7 @@ const weatherModule = (() => {
       const cityName = input.value === "" ? "London" : input.value;
       input.value = "";
       const [{ lat, lon, name }] = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=a2b73bbf19c4525e272278eaecbef43d`,
+        `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=a2b73bbf19c4525e272278eaecbef43d`,
         { mode: "cors" },
       ).then((response) => response.json());
       const data = await fetch(
