@@ -40,7 +40,7 @@ const weatherModule = (() => {
     const { weekdayShort, time } = convertTime(dt);
     const { id } = data.current.weather[0];
     const night = data.current.weather[0].icon.charAt(2) === "n";
-    const pop = data.hourly[0].pop * 100;
+    const pop = Math.round(data.hourly[0].pop * 100);
     const { name } = data;
     const { time: sunrise } = convertTime(data.daily[0].sunrise);
     const { time: sunset } = convertTime(data.daily[0].sunset);
